@@ -472,8 +472,7 @@ footer { padding: 3rem; border-top: 1px solid var(--border); display: flex; just
 
 <script>
 (function () {
-  const ENDPOINT = 'https://ai.pesnik.dev/api/chat/completions';
-  const API_KEY  = 'REVOKED';
+  const ENDPOINT = '/api/chat';           // Cloudflare Pages Function — key never hits the browser
   const MODEL    = 'openrouter/openrouter/free';
 
   const SYSTEM = `You are pesnik's terminal agent — embedded live in pesnik.dev.
@@ -552,10 +551,7 @@ Respond in terminal style: concise, precise, occasionally witty. No markdown hea
     try {
       const res = await fetch(ENDPOINT, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${API_KEY}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: MODEL,
           messages: [
