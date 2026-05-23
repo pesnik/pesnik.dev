@@ -156,6 +156,8 @@ h1 em { font-style: italic; color: var(--accent); }
 .tchat-line { animation: tchatIn 0.2s ease forwards; line-height: 1.9; }
 .tchat-thinking { color: var(--muted); font-style: italic; }
 .tchat-code { background: rgba(200,169,110,0.1); border: 1px solid var(--border); padding: 1px 5px; border-radius: 2px; font-size: 11px; color: #a8c47e; }
+.tchat-pre { background: var(--bg2); border: 1px solid var(--border); border-radius: 3px; padding: 0.75rem 1rem; margin: 6px 0; overflow-x: auto; font-size: 11px; line-height: 1.6; }
+.tchat-pre-lang { display: block; font-size: 10px; color: var(--muted); margin-bottom: 4px; }
 .tchat-line strong { color: var(--accent2); font-weight: 500; }
 .tchat-line em { color: var(--muted); }
 .tchat-line a { color: #7eb8a8; text-decoration: underline; text-underline-offset: 2px; }
@@ -524,6 +526,32 @@ Respond in terminal style: concise, precise, occasionally witty. No markdown hea
       .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
   }
 
+  function renderBlocks(text) {
+    const parts = [];
+    let last = 0;
+    const re = /```(\w*)\n([\s\S]*?)```/g;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      if (m.index > last) {
+        const before = text.slice(last, m.index).trim();
+        if (before) parts.push({ t: 'text', v: before });
+      }
+      const lang = m[1] ? esc(m[1]) : '';
+      const code = esc(m[2].replace(/\n+$/, ''));
+      const label = lang ? `<span class="tchat-pre-lang">${lang}</span>` : '';
+      parts.push({ t: 'code', v: `<pre class="tchat-pre"><code>${label}${code}</code></pre>` });
+      last = m.index + m[0].length;
+    }
+    const after = text.slice(last).trim();
+    if (after) parts.push({ t: 'text', v: after });
+    if (!parts.length) return '';
+    return parts.map(p =>
+      p.t === 'code'
+        ? p.v
+        : p.v.split('\n').filter(l => l.trim()).map(l => `<div>${renderMarkdown(l)}</div>`).join('')
+    ).join('');
+  }
+
   const scroll = () => { output.scrollTop = output.scrollHeight; };
 
   function line(html, style) {
@@ -588,8 +616,7 @@ Respond in terminal style: concise, precise, occasionally witty. No markdown hea
       const wrap = document.createElement('div');
       wrap.className = 'tchat-line';
       wrap.style.cssText = 'border-left:1px solid var(--border);padding-left:10px;margin-bottom:10px;';
-      wrap.innerHTML = text.split('\n').filter(l => l.trim())
-        .map(l => `<div>${renderMarkdown(esc(l))}</div>`).join('');
+      wrap.innerHTML = renderBlocks(text);
       msgs.appendChild(wrap);
       scroll();
 
