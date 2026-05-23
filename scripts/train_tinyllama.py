@@ -156,29 +156,32 @@ def apply_lora(model, cfg: Config):
 
 
 def train(model, tokenizer, dataset, cfg: Config):
-    from trl import SFTTrainer, DataCollatorForCompletionOnlyLM
+    from transformers import TrainingArguments
+    from trl import SFTTrainer
+
+    training_args = TrainingArguments(
+        output_dir=cfg.output_dir,
+        per_device_train_batch_size=cfg.per_device_train_batch_size,
+        gradient_accumulation_steps=cfg.gradient_accumulation_steps,
+        gradient_checkpointing=True,
+        num_train_epochs=cfg.num_train_epochs,
+        learning_rate=cfg.learning_rate,
+        warmup_steps=cfg.warmup_steps,
+        logging_steps=cfg.logging_steps,
+        save_steps=cfg.save_steps,
+        save_total_limit=cfg.save_total_limit,
+        bf16=True,
+        fp16=False,
+        dataloader_num_workers=2,
+        report_to="none",
+        remove_unused_columns=False,
+    )
 
     trainer = SFTTrainer(
         model=model,
         tokenizer=tokenizer,
         train_dataset=dataset,
-        args=dict(
-            output_dir=cfg.output_dir,
-            per_device_train_batch_size=cfg.per_device_train_batch_size,
-            gradient_accumulation_steps=cfg.gradient_accumulation_steps,
-            gradient_checkpointing=True,
-            num_train_epochs=cfg.num_train_epochs,
-            learning_rate=cfg.learning_rate,
-            warmup_steps=cfg.warmup_steps,
-            logging_steps=cfg.logging_steps,
-            save_steps=cfg.save_steps,
-            save_total_limit=cfg.save_total_limit,
-            bf16=True,
-            fp16=False,
-            dataloader_num_workers=2,
-            report_to="none",
-            remove_unused_columns=False,
-        ),
+        args=training_args,
         max_seq_length=cfg.max_seq_length,
         dataset_text_field="messages",
         packing=False,
