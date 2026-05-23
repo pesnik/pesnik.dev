@@ -83,6 +83,7 @@ def install_deps():
         "trl",
         "bitsandbytes",
         "huggingface_hub",
+        "torchao",
     ]
     for d in deps:
         try:
