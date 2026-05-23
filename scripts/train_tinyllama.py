@@ -177,21 +177,13 @@ def train(model, tokenizer, dataset, cfg: Config):
         remove_unused_columns=False,
     )
 
-    try:
-        trainer = SFTTrainer(
-            model=model, tokenizer=tokenizer, train_dataset=dataset, args=training_args,
-            max_seq_length=cfg.max_seq_length,
-            dataset_text_field="messages",
-            packing=False,
-        )
-    except TypeError:
-        trainer = SFTTrainer(
-            model=model, train_dataset=dataset, args=training_args,
-            max_seq_length=cfg.max_seq_length,
-            dataset_text_field="messages",
-            packing=False,
-        )
-        trainer.tokenizer = tokenizer
+    trainer = SFTTrainer(
+        model=model, train_dataset=dataset, args=training_args,
+        max_seq_length=cfg.max_seq_length,
+        dataset_text_field="messages",
+        packing=False,
+    )
+    trainer.tokenizer = tokenizer
 
     trainer.train()
 
