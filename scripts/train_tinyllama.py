@@ -80,7 +80,7 @@ def install_deps():
         "datasets",
         "accelerate",
         "peft",
-        "trl==0.16.0",
+        "trl",
         "bitsandbytes",
         "huggingface_hub",
     ]
@@ -156,10 +156,9 @@ def apply_lora(model, cfg: Config):
 
 
 def train(model, tokenizer, dataset, cfg: Config):
-    from transformers import TrainingArguments
-    from trl import SFTTrainer
+    import trl
 
-    training_args = TrainingArguments(
+    train_kwargs = dict(
         output_dir=cfg.output_dir,
         per_device_train_batch_size=cfg.per_device_train_batch_size,
         gradient_accumulation_steps=cfg.gradient_accumulation_steps,
@@ -170,20 +169,35 @@ def train(model, tokenizer, dataset, cfg: Config):
         logging_steps=cfg.logging_steps,
         save_steps=cfg.save_steps,
         save_total_limit=cfg.save_total_limit,
-        bf16=True,
-        fp16=False,
+        bf16=True, fp16=False,
         dataloader_num_workers=2,
         report_to="none",
         remove_unused_columns=False,
     )
 
-    trainer = SFTTrainer(
-        model=model, train_dataset=dataset, args=training_args,
-        max_seq_length=cfg.max_seq_length,
-        dataset_text_field="messages",
-        packing=False,
-    )
-    trainer.tokenizer = tokenizer
+    if hasattr(trl, "SFTConfig"):
+        # Modern TRL (>=0.18): SFTConfig + processing_class
+        from trl import SFTConfig, SFTTrainer
+        train_kwargs["max_length"] = cfg.max_seq_length
+        train_kwargs["dataset_text_field"] = "messages"
+        train_kwargs["packing"] = False
+        args = SFTConfig(**train_kwargs)
+        trainer = SFTTrainer(
+            model=model, args=args, train_dataset=dataset,
+            processing_class=tokenizer,
+        )
+    else:
+        # Legacy TRL (<=0.16): direct kwargs
+        from transformers import TrainingArguments
+        from trl import SFTTrainer
+        args = TrainingArguments(**train_kwargs)
+        trainer = SFTTrainer(
+            model=model, args=args, train_dataset=dataset,
+            max_seq_length=cfg.max_seq_length,
+            dataset_text_field="messages",
+            packing=False,
+        )
+        trainer.tokenizer = tokenizer
 
     trainer.train()
 
