@@ -80,7 +80,7 @@ def install_deps():
         "datasets",
         "accelerate",
         "peft",
-        "trl>=0.16",
+        "trl==0.16.0",
         "bitsandbytes",
         "huggingface_hub",
     ]
