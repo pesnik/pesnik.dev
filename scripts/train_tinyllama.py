@@ -27,7 +27,7 @@ class Config:
     dataset: str = "data/train.jsonl"
     output_dir: str = "pesnik-tinyllama-lora"
     hf_token: str = ""
-    hf_repo_id: str = "pesnik/portfolio-agent"
+    hf_repo_id: str = "pesnik/pesnik"
     push_to_hub: bool = False
 
     # LoRA
