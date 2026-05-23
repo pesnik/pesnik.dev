@@ -478,7 +478,7 @@ footer { padding: 3rem; border-top: 1px solid var(--border); display: flex; just
 
 <script>
 (function () {
-  const ENDPOINT = '/api/chat';           // Cloudflare Pages Function — key never hits the browser
+  const ENDPOINT = '/api/chat';
   const MODEL    = 'openrouter/openrouter/free';
 
   const SYSTEM = `You are pesnik's terminal agent — embedded live in pesnik.dev.
@@ -489,6 +489,12 @@ Projects: Zygote (Zig JDBC-ODBC bridge), Spotlight Search (Rust/Windows), Supers
 Ventures: Calf (LLM), গুদাম/Gudam (lightweight data warehouse in Rust), PlugNest (Go plugins), একের ভিতর সব (STEM EdTech).
 
 Respond in terminal style: concise, precise, occasionally witty. No markdown headers or bullet walls. Short paragraphs. Go deep on Rust, Zig, data engineering, LLMs when asked. Help visitors explore the portfolio.`;
+
+  const WEBGPU = {
+    modelUrl: "https://huggingface.co/pesnik/portfolio-agent-webgpu/resolve/main/",
+    modelId: "pesnik/portfolio-agent-webgpu",
+    modelLib: "https://raw.githubusercontent.com/mlc-ai/binary-mlc-llm-libs/main/web-llm-models/v0_2_84/base/TinyLlama-1.1B-Chat-v1.0-q4f16_1_cs1k-webgpu.wasm",
+  };
 
   const CMDS = {
     whoami:            () => `<div style="color:var(--accent);">pesnik</div><div style="color:var(--muted);">Data Engineer · Bangladesh · Always shipping</div>`,
@@ -513,6 +519,9 @@ Respond in terminal style: concise, precise, occasionally witty. No markdown hea
 
   let history = [];
   let busy = false;
+  let engine = null;
+  let webgpuReady = false;
+  let webgpuInitStarted = false;
 
   const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
@@ -564,6 +573,38 @@ Respond in terminal style: concise, precise, occasionally witty. No markdown hea
     return d;
   }
 
+  async function initWebGPU() {
+    if (webgpuInitStarted) return;
+    webgpuInitStarted = true;
+    try {
+      const webllm = await import("https://esm.run/@mlc-ai/web-llm");
+      const appConfig = {
+        model_list: [{
+          model: WEBGPU.modelUrl,
+          model_id: WEBGPU.modelId,
+          model_lib: WEBGPU.modelLib,
+        }],
+      };
+      badge.style.opacity = '1';
+      engine = await webllm.CreateMLCEngine(WEBGPU.modelId, {
+        appConfig: appConfig,
+        initProgressCallback: (r) => {
+          badge.textContent = r.text.replace(/.*?(Downloading|Loading|Activate|Finish|Llama)/, '$1').slice(0, 28);
+        },
+      });
+      webgpuReady = true;
+      badge.style.opacity = '0';
+      badge.textContent = 'AI';
+    } catch (e) {
+      console.warn("WebGPU init:", e);
+      webgpuReady = false;
+      badge.style.opacity = '0';
+      badge.textContent = 'AI';
+    }
+  }
+
+  setTimeout(initWebGPU, 3000);
+
   async function run(raw) {
     const cmd = raw.trim();
     if (!cmd) return;
@@ -592,34 +633,39 @@ Respond in terminal style: concise, precise, occasionally witty. No markdown hea
     const spinner = line(`<span class="tchat-thinking">thinking...</span>`, 'margin-bottom:4px;');
 
     try {
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: MODEL,
-          messages: [
-            { role: 'system', content: SYSTEM },
-            ...history,
-          ],
-        }),
-      });
+      let text = '';
 
-      if (!res.ok) {
-        const e = await res.json().catch(() => ({}));
-        throw new Error(e?.error?.message || `HTTP ${res.status}`);
+      if (webgpuReady && engine) {
+        const reply = await engine.chat.completions.create({
+          messages: [{ role: 'system', content: SYSTEM }, ...history],
+          max_tokens: 256,
+          temperature: 0.7,
+        });
+        text = (reply.choices?.[0]?.message?.content || '').trim();
+      } else {
+        const res = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: MODEL,
+            messages: [{ role: 'system', content: SYSTEM }, ...history],
+          }),
+        });
+        if (!res.ok) {
+          const e = await res.json().catch(() => ({}));
+          throw new Error(e?.error?.message || `HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        text = (data.choices?.[0]?.message?.content || '').trim();
       }
 
-      const data = await res.json();
-      const text = data.choices?.[0]?.message?.content?.trim() || '';
       spinner.remove();
-
       const wrap = document.createElement('div');
       wrap.className = 'tchat-line';
       wrap.style.cssText = 'border-left:1px solid var(--border);padding-left:10px;margin-bottom:10px;';
       wrap.innerHTML = renderBlocks(text);
       msgs.appendChild(wrap);
       scroll();
-
       history.push({ role: 'assistant', content: text });
 
     } catch (err) {
@@ -635,7 +681,6 @@ Respond in terminal style: concise, precise, occasionally witty. No markdown hea
     }
   }
 
-  /* cursor */
   function moveCursor() {
     mirror.textContent = input.value;
     cursor.style.left = mirror.getBoundingClientRect().width + 'px';
@@ -646,9 +691,7 @@ Respond in terminal style: concise, precise, occasionally witty. No markdown hea
     cursor.style.display = input.value ? 'none' : 'inline-block';
     moveCursor();
   });
-  input.addEventListener('blur', () => {
-    cursor.style.display = 'none';
-  });
+  input.addEventListener('blur', () => { cursor.style.display = 'none'; });
   input.addEventListener('input', () => {
     moveCursor();
     cursor.style.display = input.value ? 'none' : 'inline-block';
