@@ -9,7 +9,7 @@ from pathlib import Path
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 BASE = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-LORA_REPO = "pesnik/pesnik"
+LORA_REPO = "pesnik/pesnik-lora"
 
 def main():
     parser = argparse.ArgumentParser()
