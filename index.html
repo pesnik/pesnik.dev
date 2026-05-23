@@ -7,502 +7,223 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #0d0d0b;
-    --bg2: #141410;
-    --text: #e8e4d8;
-    --muted: #7a7668;
-    --accent: #c8a96e;
-    --accent2: #e8c88a;
-    --border: rgba(200,169,110,0.15);
-    --green: #5a8a5a;
-    --rust: #c4622d;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 14px;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  /* grain overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0.4;
-  }
-
-  /* nav */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 3rem;
-    border-bottom: 1px solid var(--border);
-    background: rgba(13,13,11,0.85);
-    backdrop-filter: blur(12px);
-  }
-
-  .nav-logo {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.2rem;
-    color: var(--accent);
-    letter-spacing: 0.02em;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--text); }
-
-  /* hero */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 8rem 3rem 4rem;
-    gap: 4rem;
-    position: relative;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    right: -100px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(ellipse, rgba(200,169,110,0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-left { max-width: 540px; }
-
-  .hero-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.1s forwards;
-  }
-
-  .hero-tag::before {
-    content: '';
-    width: 24px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  h1 {
-    font-family: 'Instrument Serif', serif;
-    font-size: clamp(3rem, 5vw, 4.5rem);
-    line-height: 1.1;
-    font-weight: 400;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.2s forwards;
-  }
-
-  h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .hero-desc {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.8;
-    max-width: 420px;
-    margin-bottom: 2.5rem;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.3s forwards;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.4s forwards;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0.75rem 1.5rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-decoration: none;
-    border-radius: 2px;
-    transition: all 0.2s;
-    cursor: pointer;
-    border: none;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: var(--bg);
-  }
-
-  .btn-primary:hover { background: var(--accent2); }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--muted);
-    border: 1px solid var(--border);
-  }
-
-  .btn-ghost:hover { color: var(--text); border-color: rgba(200,169,110,0.4); }
-
-  /* terminal card */
-  .terminal {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.3s forwards;
-  }
-
-  .terminal-bar {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .dot-r { background: #ff5f57; }
-  .dot-y { background: #febc2e; }
-  .dot-g { background: #28c840; }
-
-  .terminal-title {
-    font-size: 11px;
-    color: var(--muted);
-    margin-left: auto;
-    margin-right: auto;
-    transform: translateX(-16px);
-  }
-
-  .terminal-body {
-    padding: 1.5rem;
-    font-size: 12px;
-    line-height: 2;
-  }
-
-  .t-prompt { color: var(--accent); }
-  .t-cmd { color: var(--text); }
-  .t-comment { color: var(--muted); }
-  .t-key { color: #7eb8a8; }
-  .t-val { color: #c4a882; }
-  .t-str { color: #a8c47e; }
-  .t-num { color: #e8a06e; }
-
-  .cursor {
-    display: inline-block;
-    width: 8px;
-    height: 14px;
-    background: var(--accent);
-    animation: blink 1s step-end infinite;
-    vertical-align: middle;
-    margin-left: 2px;
-  }
-
-  /* stack badges */
-  .stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 0.5rem;
-  }
-
-  .badge {
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 2px;
-    letter-spacing: 0.04em;
-    border: 1px solid;
-  }
-
-  .badge-rust { color: #e8845a; border-color: rgba(232,132,90,0.3); background: rgba(232,132,90,0.08); }
-  .badge-zig { color: #f7a845; border-color: rgba(247,168,69,0.3); background: rgba(247,168,69,0.08); }
-  .badge-go { color: #7eb8d8; border-color: rgba(126,184,216,0.3); background: rgba(126,184,216,0.08); }
-  .badge-py { color: #a8c47e; border-color: rgba(168,196,126,0.3); background: rgba(168,196,126,0.08); }
-  .badge-data { color: #c8a0d8; border-color: rgba(200,160,216,0.3); background: rgba(200,160,216,0.08); }
-  .badge-ai { color: var(--accent); border-color: rgba(200,169,110,0.3); background: rgba(200,169,110,0.08); }
-
-  /* section */
-  section {
-    padding: 6rem 3rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .section-label {
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 3rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    max-width: 60px;
-    height: 1px;
-    background: var(--accent);
-    opacity: 0.4;
-  }
-
-  /* projects grid */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-  }
-
-  .project-card {
-    background: var(--bg);
-    padding: 2rem;
-    transition: background 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .project-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 2px;
-    height: 0;
-    background: var(--accent);
-    transition: height 0.3s;
-  }
-
-  .project-card:hover { background: var(--bg2); }
-  .project-card:hover::before { height: 100%; }
-
-  .project-name {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.3rem;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
-    color: var(--text);
-  }
-
-  .project-lang {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.75rem;
-  }
-
-  .project-desc {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.7;
-    margin-bottom: 1.25rem;
-  }
-
-  .project-link {
-    font-size: 11px;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.06em;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: color 0.2s;
-  }
-
-  .project-link:hover { color: var(--accent); }
-
-  /* ventures */
-  .ventures {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .venture-card {
-    padding: 1.75rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    transition: border-color 0.2s;
-  }
-
-  .venture-card:hover { border-color: rgba(200,169,110,0.4); }
-
-  .venture-icon {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .venture-name {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.1rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .venture-desc {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  /* timeline */
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    max-width: 600px;
-  }
-
-  .timeline-item {
-    display: grid;
-    grid-template-columns: 120px 1px 1fr;
-    gap: 0 2rem;
-    padding-bottom: 2.5rem;
-    position: relative;
-  }
-
-  .timeline-year {
-    font-size: 11px;
-    color: var(--accent);
-    padding-top: 2px;
-    text-align: right;
-  }
-
-  .timeline-line {
-    background: var(--border);
-    position: relative;
-  }
-
-  .timeline-line::before {
-    content: '';
-    position: absolute;
-    top: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-  }
-
-  .timeline-content { padding-top: 0; }
-
-  .timeline-role {
-    font-size: 13px;
-    color: var(--text);
-    margin-bottom: 0.25rem;
-  }
-
-  .timeline-detail {
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  /* footer */
-  footer {
-    padding: 3rem;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: gap;
-    gap: 1rem;
-  }
-
-  .footer-name {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.1rem;
-    color: var(--accent);
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-  }
-
-  .footer-links a {
-    font-size: 11px;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .footer-links a:hover { color: var(--text); }
-
-  .footer-copy {
-    font-size: 11px;
-    color: var(--muted);
-  }
-
-  /* animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
-  /* responsive */
-  @media (max-width: 768px) {
-    nav { padding: 1.25rem 1.5rem; }
-    .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
-    section { padding: 4rem 1.5rem; }
-    footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0d0d0b;
+  --bg2: #141410;
+  --text: #e8e4d8;
+  --muted: #7a7668;
+  --accent: #c8a96e;
+  --accent2: #e8c88a;
+  --border: rgba(200,169,110,0.15);
+  --green: #5a8a5a;
+  --rust: #c4622d;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.4;
+}
+
+/* nav */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(13,13,11,0.85);
+  backdrop-filter: blur(12px);
+}
+.nav-logo { font-family: 'Instrument Serif', serif; font-size: 1.2rem; color: var(--accent); letter-spacing: 0.02em; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+
+/* hero */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 8rem 3rem 4rem;
+  gap: 4rem;
+  position: relative;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  right: -100px; top: 50%;
+  transform: translateY(-50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(ellipse, rgba(200,169,110,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-left { max-width: 540px; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 2rem;
+  opacity: 0; animation: fadeUp 0.6s ease 0.1s forwards;
+}
+.hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  line-height: 1.1; font-weight: 400; margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards;
+}
+h1 em { font-style: italic; color: var(--accent); }
+.hero-desc {
+  color: var(--muted); font-size: 13px; line-height: 1.8;
+  max-width: 420px; margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp 0.6s ease 0.3s forwards;
+}
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp 0.6s ease 0.4s forwards;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.75rem 1.5rem;
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  letter-spacing: 0.06em; text-decoration: none;
+  border-radius: 2px; transition: all 0.2s;
+  cursor: pointer; border: none;
+}
+.btn-primary { background: var(--accent); color: var(--bg); }
+.btn-primary:hover { background: var(--accent2); }
+.btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+.btn-ghost:hover { color: var(--text); border-color: rgba(200,169,110,0.4); }
+
+/* terminal */
+.terminal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: text;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.3s forwards;
+}
+.terminal-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-r { background: #ff5f57; }
+.dot-y { background: #febc2e; }
+.dot-g { background: #28c840; }
+.terminal-title { font-size: 11px; color: var(--muted); position: absolute; left: 50%; transform: translateX(-50%); }
+#ai-badge { font-size: 10px; color: var(--accent); margin-left: auto; opacity: 0; transition: opacity 0.3s; letter-spacing: 0.06em; }
+.terminal-body {
+  padding: 1.5rem;
+  font-size: 12px;
+  line-height: 2;
+  max-height: 340px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+.terminal-body::-webkit-scrollbar { width: 3px; }
+.terminal-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.t-prompt { color: var(--accent); }
+.t-cmd { color: var(--text); }
+.t-comment { color: var(--muted); }
+.t-key { color: #7eb8a8; }
+.t-str { color: #a8c47e; }
+#tchat-hint { padding: 0 1.5rem 0.75rem; font-size: 10px; color: var(--muted); letter-spacing: 0.04em; transition: opacity 0.4s; }
+
+/* chat lines */
+@keyframes tchatIn { from { opacity:0; transform:translateY(3px); } to { opacity:1; transform:translateY(0); } }
+.tchat-line { animation: tchatIn 0.2s ease forwards; line-height: 1.9; }
+.tchat-thinking { color: var(--muted); font-style: italic; }
+
+/* stack badges */
+.stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.5rem; }
+.badge { font-size: 10px; padding: 3px 8px; border-radius: 2px; letter-spacing: 0.04em; border: 1px solid; }
+.badge-rust { color: #e8845a; border-color: rgba(232,132,90,0.3); background: rgba(232,132,90,0.08); }
+.badge-zig  { color: #f7a845; border-color: rgba(247,168,69,0.3);  background: rgba(247,168,69,0.08); }
+.badge-go   { color: #7eb8d8; border-color: rgba(126,184,216,0.3); background: rgba(126,184,216,0.08); }
+.badge-py   { color: #a8c47e; border-color: rgba(168,196,126,0.3); background: rgba(168,196,126,0.08); }
+.badge-data { color: #c8a0d8; border-color: rgba(200,160,216,0.3); background: rgba(200,160,216,0.08); }
+.badge-ai   { color: var(--accent); border-color: rgba(200,169,110,0.3); background: rgba(200,169,110,0.08); }
+
+/* sections */
+section { padding: 6rem 3rem; border-top: 1px solid var(--border); }
+.section-label {
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 3rem;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent); opacity: 0.4; }
+
+/* projects */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.project-card { background: var(--bg); padding: 2rem; transition: background 0.2s; position: relative; overflow: hidden; }
+.project-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 0; background: var(--accent); transition: height 0.3s; }
+.project-card:hover { background: var(--bg2); }
+.project-card:hover::before { height: 100%; }
+.project-name { font-family: 'Instrument Serif', serif; font-size: 1.3rem; font-weight: 400; margin-bottom: 0.5rem; color: var(--text); }
+.project-lang { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+.project-desc { font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
+.project-link { font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s; }
+.project-link:hover { color: var(--accent); }
+
+/* ventures */
+.ventures { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+.venture-card { padding: 1.75rem; border: 1px solid var(--border); border-radius: 4px; transition: border-color 0.2s; }
+.venture-card:hover { border-color: rgba(200,169,110,0.4); }
+.venture-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+.venture-name { font-family: 'Instrument Serif', serif; font-size: 1.1rem; margin-bottom: 0.4rem; }
+.venture-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+/* timeline */
+.timeline { display: flex; flex-direction: column; gap: 0; max-width: 600px; }
+.timeline-item { display: grid; grid-template-columns: 120px 1px 1fr; gap: 0 2rem; padding-bottom: 2.5rem; }
+.timeline-year { font-size: 11px; color: var(--accent); padding-top: 2px; text-align: right; }
+.timeline-line { background: var(--border); position: relative; }
+.timeline-line::before { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+.timeline-role { font-size: 13px; color: var(--text); margin-bottom: 0.25rem; }
+.timeline-detail { font-size: 12px; color: var(--muted); }
+
+/* footer */
+footer { padding: 3rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-name { font-family: 'Instrument Serif', serif; font-size: 1.1rem; color: var(--accent); }
+.footer-links { display: flex; gap: 1.5rem; list-style: none; }
+.footer-links a { font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { font-size: 11px; color: var(--muted); }
+
+/* animations */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes blink  { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* responsive */
+@media (max-width: 768px) {
+  nav { padding: 1.25rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+  section { padding: 4rem 1.5rem; }
+  footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+}
 </style>
 </head>
 <body>
@@ -531,26 +252,52 @@
     </div>
   </div>
 
-  <div class="terminal">
+  <!-- TUI CHAT TERMINAL -->
+  <div class="terminal" id="pesnik-terminal">
     <div class="terminal-bar">
       <div class="dot dot-r"></div>
       <div class="dot dot-y"></div>
       <div class="dot dot-g"></div>
       <span class="terminal-title">pesnik — zsh</span>
+      <span id="ai-badge">● AI</span>
     </div>
-    <div class="terminal-body">
-      <div><span class="t-prompt">~</span> <span class="t-cmd">cat whoami.json</span></div>
-      <div class="t-comment">{</div>
-      <div>&nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-str">"pesnik"</span>,</div>
-      <div>&nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-str">"Data Engineer"</span>,</div>
-      <div>&nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-str">"Bangladesh 🇧🇩"</span>,</div>
-      <div>&nbsp;&nbsp;<span class="t-key">"stack"</span>: [</div>
-      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Rust"</span>, <span class="t-str">"Zig"</span>, <span class="t-str">"Go"</span>, <span class="t-str">"Python"</span></div>
-      <div>&nbsp;&nbsp;],</div>
-      <div>&nbsp;&nbsp;<span class="t-key">"building"</span>: <span class="t-str">"Calf LLM"</span>,</div>
-      <div>&nbsp;&nbsp;<span class="t-key">"spirit_animal"</span>: <span class="t-str">"🦫 The Beaver"</span></div>
-      <div class="t-comment">}</div>
-      <div style="margin-top: 0.5rem;"><span class="t-prompt">~</span> <span class="cursor"></span></div>
+
+    <div class="terminal-body" id="tchat-output">
+      <div id="tchat-static">
+        <div><span class="t-prompt">~</span> <span class="t-cmd">cat whoami.json</span></div>
+        <div class="t-comment">{</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-str">"pesnik"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-str">"Data Engineer"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-str">"Bangladesh 🇧🇩"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"stack"</span>: [</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Rust"</span>, <span class="t-str">"Zig"</span>, <span class="t-str">"Go"</span>, <span class="t-str">"Python"</span></div>
+        <div>&nbsp;&nbsp;],</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"building"</span>: <span class="t-str">"Calf LLM"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"spirit_animal"</span>: <span class="t-str">"🦫 The Beaver"</span></div>
+        <div class="t-comment">}</div>
+      </div>
+      <div id="tchat-messages"></div>
+    </div>
+
+    <!-- Input row -->
+    <div id="tchat-input-row" style="display:flex;align-items:center;gap:6px;padding:0.5rem 1.5rem 0.75rem;border-top:1px solid var(--border);margin-top:0.25rem;">
+      <span class="t-prompt" style="flex-shrink:0;">~</span>
+      <div style="position:relative;flex:1;display:flex;align-items:center;">
+        <input
+          id="tchat-input"
+          type="text"
+          placeholder="type a command or ask me anything..."
+          autocomplete="off"
+          spellcheck="false"
+          style="width:100%;background:transparent;border:none;outline:none;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;caret-color:transparent;padding-right:10px;"
+        />
+        <span id="tchat-cursor" style="position:absolute;left:0;width:8px;height:14px;background:var(--accent);animation:blink 1s step-end infinite;pointer-events:none;"></span>
+        <span id="tchat-mirror" aria-hidden="true" style="position:absolute;visibility:hidden;white-space:pre;font-family:'DM Mono',monospace;font-size:12px;pointer-events:none;left:0;top:0;"></span>
+      </div>
+    </div>
+
+    <div id="tchat-hint">
+      try: <span style="color:var(--accent);">whoami</span> &middot; <span style="color:var(--accent);">ls projects</span> &middot; or ask me anything
     </div>
   </div>
 </section>
@@ -559,76 +306,69 @@
 <section id="projects">
   <div class="section-label">Open Source</div>
   <div class="projects-grid">
-
     <div class="project-card">
       <div class="project-lang">Zig + Java</div>
       <div class="project-name">Zygote</div>
       <p class="project-desc">Open-source JDBC to ODBC bridge built in Zig. High performance, memory safe, zero dependencies — uniting two connectivity standards.</p>
-      <div class="stack" style="margin-bottom: 1rem;">
+      <div class="stack" style="margin-bottom:1rem;">
         <span class="badge badge-zig">Zig</span>
         <span class="badge badge-data">JDBC</span>
         <span class="badge badge-data">ODBC</span>
       </div>
       <a href="https://github.com/pesnik/zygote" target="_blank" class="project-link">github.com/pesnik/zygote →</a>
     </div>
-
     <div class="project-card">
       <div class="project-lang">Rust</div>
       <div class="project-name">Spotlight Search</div>
       <p class="project-desc">A blazingly fast file and application launcher for Windows, inspired by macOS Spotlight. Built for performance and reliability.</p>
-      <div class="stack" style="margin-bottom: 1rem;">
+      <div class="stack" style="margin-bottom:1rem;">
         <span class="badge badge-rust">Rust</span>
         <span class="badge badge-data">Windows</span>
       </div>
       <a href="https://github.com/pesnik/spotlight-search" target="_blank" class="project-link">github.com/pesnik/spotlight-search →</a>
     </div>
-
     <div class="project-card">
       <div class="project-lang">Data Engineering</div>
       <div class="project-name">Superset Playground</div>
       <p class="project-desc">Comprehensive Apache Superset mastery repo covering enterprise DevOps deployments, advanced analytics, and real-world BI use cases.</p>
-      <div class="stack" style="margin-bottom: 1rem;">
+      <div class="stack" style="margin-bottom:1rem;">
         <span class="badge badge-py">Python</span>
         <span class="badge badge-data">Docker</span>
         <span class="badge badge-data">K8s</span>
       </div>
       <a href="https://github.com/pesnik/superset-playground" target="_blank" class="project-link">github.com/pesnik/superset-playground →</a>
     </div>
-
     <div class="project-card">
       <div class="project-lang">Advent of Code</div>
       <div class="project-name">AoC in Zig</div>
       <p class="project-desc">Advent of Code solutions in Zig, structured with benchmarking, fuzzing, performance analysis and visualization infrastructure.</p>
-      <div class="stack" style="margin-bottom: 1rem;">
+      <div class="stack" style="margin-bottom:1rem;">
         <span class="badge badge-zig">Zig</span>
         <span class="badge badge-data">Benchmarks</span>
       </div>
       <a href="https://github.com/pesnik/advent-of-code-zig" target="_blank" class="project-link">github.com/pesnik/advent-of-code-zig →</a>
     </div>
-
     <div class="project-card">
       <div class="project-lang">Android / Kotlin</div>
       <div class="project-name">MorseChat</div>
       <p class="project-desc">Android chat app that converts conversations into Morse code in real-time. Toggle between full conversation and prompt-only mode.</p>
-      <div class="stack" style="margin-bottom: 1rem;">
+      <div class="stack" style="margin-bottom:1rem;">
         <span class="badge badge-data">Android</span>
         <span class="badge badge-data">Kotlin</span>
       </div>
       <a href="https://github.com/pesnik/morse-chat" target="_blank" class="project-link">github.com/pesnik/morse-chat →</a>
     </div>
-
     <div class="project-card">
       <div class="project-lang">Go</div>
       <div class="project-name">Gin Repertoire</div>
       <p class="project-desc">Comprehensive Gin framework collection — projects, middleware, templates and best practices for production Go web services.</p>
-      <div class="stack" style="margin-bottom: 1rem;">
+      <div class="stack" style="margin-bottom:1rem;">
         <span class="badge badge-go">Go</span>
         <span class="badge badge-data">Gin</span>
         <span class="badge badge-data">GORM</span>
       </div>
       <a href="https://github.com/pesnik/gin-repertoire" target="_blank" class="project-link">github.com/pesnik/gin-repertoire →</a>
     </div>
-
   </div>
 </section>
 
@@ -636,54 +376,49 @@
 <section id="ventures">
   <div class="section-label">Building</div>
   <div class="ventures">
-
     <div class="venture-card">
       <div class="venture-icon">🧠</div>
       <div class="venture-name">Calf</div>
       <p class="venture-desc">A large language model designed to act as the L1 engineer and knowledge keeper of the company. AI for institutional memory.</p>
-      <div class="stack" style="margin-top: 0.75rem;">
+      <div class="stack" style="margin-top:0.75rem;">
         <span class="badge badge-ai">LLM</span>
         <span class="badge badge-py">Python</span>
       </div>
     </div>
-
     <div class="venture-card">
       <div class="venture-icon">🏗</div>
       <div class="venture-name">গুদাম (Gudam)</div>
       <p class="venture-desc">Lightweight data warehouse solution tailored for startups. Because enterprise data infra shouldn't require enterprise budgets.</p>
-      <div class="stack" style="margin-top: 0.75rem;">
+      <div class="stack" style="margin-top:0.75rem;">
         <span class="badge badge-data">Data Warehouse</span>
         <span class="badge badge-rust">Rust</span>
       </div>
     </div>
-
     <div class="venture-card">
       <div class="venture-icon">🔌</div>
       <div class="venture-name">PlugNest</div>
       <p class="venture-desc">A startup creating plugins and extensions to enhance software functionality. Modular, composable, production-ready.</p>
-      <div class="stack" style="margin-top: 0.75rem;">
+      <div class="stack" style="margin-top:0.75rem;">
         <span class="badge badge-go">Go</span>
         <span class="badge badge-data">Plugins</span>
       </div>
     </div>
-
     <div class="venture-card">
       <div class="venture-icon">📚</div>
       <div class="venture-name">একের ভিতর সব</div>
       <p class="venture-desc">A platform for interactive and visual learning, focusing on STEM subjects. Making complex ideas beautiful and accessible.</p>
-      <div class="stack" style="margin-top: 0.75rem;">
+      <div class="stack" style="margin-top:0.75rem;">
         <span class="badge badge-data">EdTech</span>
         <span class="badge badge-ai">Visual</span>
       </div>
     </div>
-
   </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
   <div class="section-label">Journey</div>
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
     <div class="timeline">
       <div class="timeline-item">
         <div class="timeline-year">Future</div>
@@ -710,15 +445,14 @@
         </div>
       </div>
     </div>
-
     <div>
-      <p style="color: var(--muted); font-size: 13px; line-height: 2; margin-bottom: 1.5rem;">
+      <p style="color:var(--muted);font-size:13px;line-height:2;margin-bottom:1.5rem;">
         I'm an entrepreneur and Data Engineer from Bangladesh with a background in Software Engineering, currently exploring the frontier of AI.
       </p>
-      <p style="color: var(--muted); font-size: 13px; line-height: 2; margin-bottom: 2rem;">
-        My spirit: <span style="color: var(--text);">🦫 The Beaver</span> — industrious, creative, an ecosystem shaper and nature's architect. <span style="font-style: italic; font-family: 'Instrument Serif', serif; color: var(--accent); font-size: 15px;">একের ভিতর সব</span> — everything within one.
+      <p style="color:var(--muted);font-size:13px;line-height:2;margin-bottom:2rem;">
+        My spirit: <span style="color:var(--text);">🦫 The Beaver</span> — industrious, creative, an ecosystem shaper and nature's architect. <span style="font-style:italic;font-family:'Instrument Serif',serif;color:var(--accent);font-size:15px;">একের ভিতর সব</span> — everything within one.
       </p>
-      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
         <a href="https://github.com/pesnik" target="_blank" class="btn btn-ghost">GitHub ↗</a>
         <a href="https://huggingface.co/pesnik" target="_blank" class="btn btn-ghost">HuggingFace ↗</a>
       </div>
@@ -735,6 +469,171 @@
   </ul>
   <div class="footer-copy">Bangladesh 🇧🇩 · Built with intention</div>
 </footer>
+
+<script>
+(function () {
+  const ENDPOINT = 'https://ai.pesnik.dev/api/chat/completions';
+  const API_KEY  = 'REVOKED';
+  const MODEL    = 'openrouter/openrouter/free';
+
+  const SYSTEM = `You are pesnik's terminal agent — embedded live in pesnik.dev.
+
+pesnik is a Data Engineer & entrepreneur in Bangladesh. Stack: Rust, Zig, Go, Python. Building Calf LLM (AI for institutional memory). Spirit animal: 🦫 The Beaver.
+
+Projects: Zygote (Zig JDBC-ODBC bridge), Spotlight Search (Rust/Windows), Superset Playground, AoC in Zig, MorseChat (Android/Kotlin), Gin Repertoire (Go/Gin/GORM).
+Ventures: Calf (LLM), গুদাম/Gudam (lightweight data warehouse in Rust), PlugNest (Go plugins), একের ভিতর সব (STEM EdTech).
+
+Respond in terminal style: concise, precise, occasionally witty. No markdown headers or bullet walls. Short paragraphs. Go deep on Rust, Zig, data engineering, LLMs when asked. Help visitors explore the portfolio.`;
+
+  const CMDS = {
+    whoami:            () => `<div style="color:var(--accent);">pesnik</div><div style="color:var(--muted);">Data Engineer · Bangladesh · Always shipping</div>`,
+    'ls projects':     () => ['zygote','spotlight-search','superset-playground','advent-of-code-zig','morse-chat','gin-repertoire'].map(p => `<div style="color:#7eb8a8;">${p}/</div>`).join(''),
+    'ls ventures':     () => ['calf','gudam','plugnest','eker-bhitor-sob'].map(p => `<div style="color:#7eb8a8;">${p}/</div>`).join(''),
+    ls:                () => `<div style="color:var(--muted);">projects/&nbsp;&nbsp;ventures/&nbsp;&nbsp;whoami.json&nbsp;&nbsp;spirit_animal.txt</div>`,
+    pwd:               () => `<div>/home/pesnik</div>`,
+    help:              () => `<div style="color:var(--accent);">built-in commands:</div><div style="color:var(--muted);">whoami · ls · ls projects · ls ventures · pwd · clear · help · cat spirit_animal.txt</div><div style="margin-top:6px;color:var(--muted);">or type anything in plain English — the AI is live ↵</div>`,
+    'cat whoami.json': () => `<div class="t-comment">{</div><div>&nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-str">"pesnik"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-str">"Data Engineer"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-str">"Bangladesh 🇧🇩"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"stack"</span>: [<span class="t-str">"Rust"</span>, <span class="t-str">"Zig"</span>, <span class="t-str">"Go"</span>, <span class="t-str">"Python"</span>],</div><div>&nbsp;&nbsp;<span class="t-key">"building"</span>: <span class="t-str">"Calf LLM"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"spirit_animal"</span>: <span class="t-str">"🦫 The Beaver"</span></div><div class="t-comment">}</div>`,
+    'cat spirit_animal.txt': () => `<div>🦫 The Beaver</div><div style="color:var(--muted);">industrious · creative · ecosystem shaper · nature's architect</div><div style="color:var(--muted);font-style:italic;">একের ভিতর সব — everything within one</div>`,
+  };
+
+  const input    = document.getElementById('tchat-input');
+  const output   = document.getElementById('tchat-output');
+  const msgs     = document.getElementById('tchat-messages');
+  const badge    = document.getElementById('ai-badge');
+  const hint     = document.getElementById('tchat-hint');
+  const inputRow = document.getElementById('tchat-input-row');
+  const terminal = document.getElementById('pesnik-terminal');
+  const cursor   = document.getElementById('tchat-cursor');
+  const mirror   = document.getElementById('tchat-mirror');
+
+  let history = [];
+  let busy = false;
+
+  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const scroll = () => { output.scrollTop = output.scrollHeight; };
+
+  function line(html, style) {
+    const d = document.createElement('div');
+    d.className = 'tchat-line';
+    if (style) d.style.cssText = style;
+    d.innerHTML = html;
+    msgs.appendChild(d);
+    scroll();
+    return d;
+  }
+
+  async function run(raw) {
+    const cmd = raw.trim();
+    if (!cmd) return;
+
+    line(`<span class="t-prompt">~</span> <span class="t-cmd">${esc(cmd)}</span>`);
+    hint.style.opacity = '0';
+
+    if (cmd === 'clear') {
+      msgs.innerHTML = '';
+      document.getElementById('tchat-static').style.display = 'none';
+      return;
+    }
+
+    if (CMDS[cmd]) { line(CMDS[cmd](), 'margin-bottom:6px;'); return; }
+
+    await callAI(cmd);
+  }
+
+  async function callAI(msg) {
+    if (busy) return;
+    busy = true;
+    badge.style.opacity = '1';
+    inputRow.style.display = 'none';
+
+    history.push({ role: 'user', content: msg });
+    const spinner = line(`<span class="tchat-thinking">thinking...</span>`, 'margin-bottom:4px;');
+
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: MODEL,
+          messages: [
+            { role: 'system', content: SYSTEM },
+            ...history,
+          ],
+        }),
+      });
+
+      if (!res.ok) {
+        const e = await res.json().catch(() => ({}));
+        throw new Error(e?.error?.message || `HTTP ${res.status}`);
+      }
+
+      const data = await res.json();
+      const text = data.choices?.[0]?.message?.content?.trim() || '';
+      spinner.remove();
+
+      const wrap = document.createElement('div');
+      wrap.className = 'tchat-line';
+      wrap.style.cssText = 'border-left:1px solid var(--border);padding-left:10px;margin-bottom:10px;';
+      wrap.innerHTML = text.split('\n').filter(l => l.trim())
+        .map(l => `<div>${esc(l)}</div>`).join('');
+      msgs.appendChild(wrap);
+      scroll();
+
+      history.push({ role: 'assistant', content: text });
+
+    } catch (err) {
+      spinner.remove();
+      line(`<span style="color:var(--rust);">error: ${esc(err.message)}</span>`, 'margin-bottom:4px;');
+      history.pop();
+    } finally {
+      busy = false;
+      badge.style.opacity = '0';
+      inputRow.style.display = 'flex';
+      moveCursor();
+      input.focus();
+    }
+  }
+
+  /* cursor */
+  function moveCursor() {
+    mirror.textContent = input.value;
+    cursor.style.left = mirror.getBoundingClientRect().width + 'px';
+  }
+
+  input.addEventListener('focus', () => {
+    input.style.caretColor = 'transparent';
+    cursor.style.display = input.value ? 'none' : 'inline-block';
+    moveCursor();
+  });
+  input.addEventListener('blur', () => {
+    cursor.style.display = 'none';
+  });
+  input.addEventListener('input', () => {
+    moveCursor();
+    cursor.style.display = input.value ? 'none' : 'inline-block';
+    input.style.caretColor = input.value ? 'var(--accent)' : 'transparent';
+  });
+  input.addEventListener('keydown', () => requestAnimationFrame(moveCursor));
+
+  input.addEventListener('keydown', async e => {
+    if (e.key === 'Enter' && !busy) {
+      const v = input.value;
+      input.value = '';
+      cursor.style.display = 'inline-block';
+      input.style.caretColor = 'transparent';
+      moveCursor();
+      await run(v);
+    }
+  });
+
+  terminal.addEventListener('click', () => input.focus());
+  moveCursor();
+  input.focus();
+})();
+</script>
 
 </body>
 </html>
