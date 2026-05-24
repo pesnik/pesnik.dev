@@ -34,7 +34,7 @@
     \ifthenelse{\equal{#6}{}}{}{, #6}%
     \strut%
     \ifx&#7&%
-    \else{\newline{}\begin{minipage}[t]{\linewidth}\small#7\end{minipage}}\fi}}
+    \else{\newline{}\begin{minipage}[t]{\linewidth}#7\end{minipage}}\fi}}
 
 \begin{document}
 
@@ -49,60 +49,60 @@
 \section{Experience}
 
 \cventry{May 2024--Present}{Lead Engineer, Enterprise Data Engineering}{Banglalink Digital}{Dhaka, BD}{}{
-\begin{itemize}[leftmargin=0.4cm, itemsep=0.02cm, topsep=0.02cm]
-  \item Sole data platform engineer and DevOps owner across full stack: IPDR billions-of-rows ETL and near-real-time microbatch pipeline for unplanned volume spikes, enterprise analytics on Kubernetes, and Airflow orchestration — 6 years continuous infrastructure ownership (Kubernetes, Docker Swarm, Helm, CI/CD, n8n, CCE)
-  \item Architected enterprise \textbf{GenAI agent orchestration} platform (\textbf{IT Toolkit}: Tauri 2/Rust + MCP client/server) with multi-agent tool-calling, \textbf{autonomous workflow agents}, \textbf{context/memory management}, and \textbf{AI observability}; profiled for Slack, Jira, ServiceNow, Okta, M365
-  \item Co-architected enterprise \textbf{RAG pipeline} (LangChain, LlamaIndex) for internal \textbf{knowledge retrieval}; designed \textbf{semantic search with embeddings}, \textbf{hallucination mitigation}, vector store integration, and \textbf{AI guardrails}; mentored GenAI engineering team
-  \item Built \textbf{LLMOps} pipeline for Day-2 Ops: autonomous \textbf{AI observability}, \textbf{model evaluation} hooks, LLM-powered L1 engineering assistant with \textbf{prompt management} and self-healing ETL
-  \item Designed secure \textbf{Agent Sandbox} --- AI agent evaluation environment with \textbf{responsible AI} controls, \textbf{AI governance} guardrails, and live browser/CLI access for agentic testing
-  \item Architected AI-ready \textbf{distributed data platform} (Data Agent Ready Warehouse on S3) with \textbf{vector database}-compatible layer for \textbf{semantic search} and embedding workloads
-  \item Built \textbf{Migration Hub}: GenAI-powered web UI with \textbf{LLM-assisted SQL translation} and \textbf{prompt engineering} for Teradata $\rightarrow$ Huawei DWS migration at scale
-  \item Deployed enterprise self-service analytics platform (Apache Superset fork) on Kubernetes (solo DevOps, 100+ users); built \textbf{superset-hetuengine-connector} (open-source, PyPI --- first-of-kind Superset $\rightarrow$ Huawei HetuEngine connector)
+\begin{itemize}[leftmargin=0.4cm, itemsep=0pt, topsep=0.02cm]
+  \item Sole data platform engineer and DevOps owner across full stack: IPDR billions-of-rows ETL and near-real-time microbatch pipeline for unplanned volume spikes, enterprise analytics on Kubernetes, and Airflow orchestration --- 6 years continuous infrastructure ownership (Kubernetes, Docker Swarm, Helm, CI/CD, n8n, CCE)
+  \item Architected enterprise \textbf{GenAI agent orchestration} platform (IT Toolkit: Tauri 2/Rust + MCP client/server) with multi-agent tool-calling, autonomous workflow agents, context/memory management, and AI observability; profiled for Slack, Jira, ServiceNow, Okta, M365
+  \item Co-architected enterprise \textbf{RAG pipeline} (LangChain, LlamaIndex) for internal knowledge retrieval; designed semantic search with embeddings, hallucination mitigation, vector store integration, and AI guardrails; mentored GenAI engineering team
+  \item Built \textbf{LLMOps} pipeline for Day-2 Ops: autonomous AI observability, model evaluation hooks, LLM-powered L1 engineering assistant with prompt management and self-healing ETL
+  \item Designed Agent Sandbox --- AI agent evaluation environment with responsible AI controls, AI governance guardrails, and live browser/CLI access for agentic testing
+  \item Architected AI-ready \textbf{distributed data platform} (Data Agent Ready Warehouse) with vector database-compatible layer for semantic search and embedding workloads
+  \item Built Migration Hub: GenAI-powered web UI with LLM-assisted SQL translation and prompt engineering for Teradata $\rightarrow$ Huawei DWS migration at scale
+  \item Deployed enterprise self-service analytics platform (Apache Superset fork) on Kubernetes (solo DevOps, 100+ users); built superset-hetuengine-connector (open-source, PyPI --- first-of-kind Superset $\rightarrow$ Huawei HetuEngine connector)
   \item Solo migrated tier-1 service Airflow 2.6 $\rightarrow$ 3.1.8 (zero unplanned downtime); architected IPDR billions-of-rows ETL and near-real-time billion-record pipeline for unplanned volume spikes
-  \item Mentored ML/GenAI engineers; self-hosted n8n automation; built macOS VPN client (tigerstripes-vpn); created \textit{yet-another-course} Python training program
+  \item Mentored ML/GenAI engineers; self-hosted n8n automation; built macOS VPN client (tigerstripes-vpn); created yet-another-course Python training program
 \end{itemize}}
 
 \cventry{Oct 2023--Apr 2024}{Big Data Service Lead Engineer}{Banglalink Digital}{Dhaka, BD}{}{
-\begin{itemize}[leftmargin=0.4cm, itemsep=0.02cm, topsep=0.02cm]
-  \item Deployed ML models (XGBoost) on CDP Cluster with \textbf{MLOps} practices; resolved source-level integration issues; engineered SIM lifecycle system (Spring Boot + MySQL)
-  \item Developed PySpark \textbf{distributed} workflows; modernized network transmission with graph algorithms; built Rust/React desktop app for CSV validation
+\begin{itemize}[leftmargin=0.4cm, itemsep=0pt, topsep=0.02cm]
+  \item Deployed ML models (XGBoost) on CDP Cluster with MLOps practices; resolved source-level integration issues; engineered SIM lifecycle system (Spring Boot + MySQL)
+  \item Developed PySpark distributed workflows; modernized network transmission with graph algorithms; built Rust/React desktop app for CSV validation
   \item Built real-time streaming pipeline with \textbf{Kafka} and Apache Ignite for high-throughput event processing on the big data platform
 \end{itemize}}
 
 \cventry{Jul 2022--Aug 2023}{Software Engineer}{Trucklagbe}{Dhaka, BD}{}{
-\begin{itemize}[leftmargin=0.4cm, itemsep=0.02cm, topsep=0.02cm]
+\begin{itemize}[leftmargin=0.4cm, itemsep=0pt, topsep=0.02cm]
   \item Built API Gateway (Express/Nginx, 20+ microservices); Selenium Grid CI/CD (60\% QA reduction); MITM Proxy inspector; business automation (Node.js, Google Apps Script)
-  \item Analysed MongoDB mobile app user behaviour — categorised user actions, surfaced usage patterns, and presented findings via Metabase dashboards to inform product decisions
+  \item Analysed MongoDB mobile app user behaviour --- categorised user actions, surfaced usage patterns, and presented findings via Metabase dashboards to inform product decisions
 \end{itemize}}
 
 \cventry{Feb 2021--Jun 2022}{Junior Software Developer}{Trucklagbe}{Dhaka, BD}{}{
-\begin{itemize}[leftmargin=0.4cm, itemsep=0.02cm, topsep=0.02cm]
+\begin{itemize}[leftmargin=0.4cm, itemsep=0pt, topsep=0.02cm]
   \item GPS parser integrating 1500+ active devices; SaaS REST APIs for enterprise clients; cash disbursement module (Node.js, MySQL, Angular)
 \end{itemize}}
 
 \cventry{2021--Present}{Software Engineering Consultant}{Freelance / Vendor}{Remote}{}{
-\begin{itemize}[leftmargin=0.4cm, itemsep=0.02cm, topsep=0.02cm]
+\begin{itemize}[leftmargin=0.4cm, itemsep=0pt, topsep=0.02cm]
   \item Delivered production platforms: c-onelogistics.com, brogrammerslab.tech, and others
-  \item Built real-time Firebase/JS chat application for a Bangladeshi delivery service — coordinating riders, admins, and customers across live order flows
-  \item Automated Statefarm.com web workflows using Java and Selenium — streamlined repetitive processes as a vendor engagement
+  \item Built real-time Firebase/JS chat application for a Bangladeshi delivery service --- coordinating riders, admins, and customers across live order flows
+  \item Automated Statefarm.com web workflows using Java and Selenium --- streamlined repetitive processes as a vendor engagement
 \end{itemize}}
 
 % ── Key Projects ─────────────────────────────────────────────────────────────
 \section{Key Projects}
 
-\cventry{2025--2026}{Enterprise GenAI Agent Orchestration Platform (IT Toolkit)}{Tauri 2, Rust, Next.js 15, MCP, Fluent UI v9}{}{}{Multi-agent \textbf{agent orchestration} (MCP client/server), CLI/browser/computer-use tool hierarchy, v2 \textbf{autonomous workflow agents} engine (auto/agent/human actors), \textbf{context/memory management}, \textbf{AI guardrails}, \textbf{AI observability}; enterprise site profiles (Slack, GitHub, Jira, ServiceNow, Okta)}
+\cventry{2025--2026}{Enterprise GenAI Agent Orchestration Platform (IT Toolkit)}{Tauri 2, Rust, Next.js 15, MCP, Fluent UI v9}{}{}{Multi-agent agent orchestration (MCP client/server), CLI/browser/computer-use tool hierarchy, v2 autonomous workflow agents engine (auto/agent/human actors), context/memory management, AI guardrails, AI observability; enterprise site profiles (Slack, GitHub, Jira, ServiceNow, Okta)}
 
-\cventry{2025}{Personal AI Agent --- QLoRA Fine-tuned LLM}{Python, PEFT, TRL, BitsAndBytes, HuggingFace}{}{}{End-to-end \textbf{LoRA/PEFT} fine-tuning: TinyLlama 1.1B, 4-bit QLoRA (BitsAndBytes), LoRA rank-32, SFTTrainer, custom dataset curation; published as \texttt{pesnik/pesnik-lora} + \texttt{pesnik/pesnik} on HuggingFace; live \textbf{GPU-based inference} via WebGPU at pesnik.dev}
+\cventry{2025}{Personal AI Agent --- QLoRA Fine-tuned LLM}{Python, PEFT, TRL, BitsAndBytes, HuggingFace}{}{}{End-to-end \textbf{LoRA/PEFT} fine-tuning: TinyLlama 1.1B, 4-bit QLoRA (BitsAndBytes), LoRA rank-32, SFTTrainer, custom dataset curation; published as pesnik/pesnik-lora + pesnik/pesnik on HuggingFace; live GPU-based inference via WebGPU at pesnik.dev}
 
-\cventry{2025}{Enterprise RAG Knowledge Retrieval System}{LangChain, LlamaIndex, Python, Vector Store}{}{}{Enterprise \textbf{RAG pipeline}: \textbf{semantic search}, \textbf{embeddings}, vector database integration, \textbf{hallucination mitigation}, \textbf{AI guardrails}, and context/memory management for Banglalink internal \textbf{knowledge retrieval}}
+\cventry{2025}{Enterprise RAG Knowledge Retrieval System}{LangChain, LlamaIndex, Python, Vector Store}{}{}{Enterprise \textbf{RAG pipeline}: semantic search, embeddings, vector database integration, hallucination mitigation, AI guardrails, and context/memory management for Banglalink internal knowledge retrieval}
 
-\cventry{2025}{LLMOps \& AI Observability Platform (DAGnostics)}{Python, FastAPI, LLMs, Drain3}{}{}{Production \textbf{LLMOps} monitoring: LLM-based ETL failure analysis, Drain3 log clustering, anomaly detection, \textbf{AI observability} dashboards, \textbf{model evaluation} and alerting pipeline}
+\cventry{2025}{LLMOps \& AI Observability Platform (DAGnostics)}{Python, FastAPI, LLMs, Drain3}{}{}{Production \textbf{LLMOps} monitoring: LLM-based ETL failure analysis, Drain3 log clustering, anomaly detection, AI observability dashboards, model evaluation and alerting pipeline}
 
-\cventry{2025--2026}{Migration Hub \& tpt-builder --- Teradata to Huawei DWS}{TypeScript, Python, LLM, PyPI}{}{}{GenAI-powered \textbf{prompt engineering} platform for LLM-assisted SQL dialect translation and query validation; \textbf{tpt-builder} (published on PyPI) generates Teradata PT scripts programmatically — core open-source tooling for enterprise DWH migration}
+\cventry{2025--2026}{Migration Hub \& tpt-builder --- Teradata to Huawei DWS}{TypeScript, Python, LLM, PyPI}{}{}{GenAI-powered prompt engineering platform for LLM-assisted SQL dialect translation and query validation; tpt-builder (published on PyPI) generates Teradata PT scripts programmatically --- core open-source tooling for enterprise DWH migration}
 
 \cventry{2024}{Informatica-to-Airflow DAG Converter}{TypeScript, Oracle}{}{}{VS Code extension automating ETL migration; adopted by multiple engineers, saving 3+ hours per workflow}
 
-\cventry{2025}{DAGSonar --- Airflow Task Change Visibility}{Python, Apache Airflow, PyPI}{}{}{Tracks DAG modifications, version diffs, and configuration changes across Airflow pipelines; delivers real-time notifications to engineering teams; published as \texttt{dagsonar} on PyPI}
+\cventry{2025}{DAGSonar --- Airflow Task Change Visibility}{Python, Apache Airflow, PyPI}{}{}{Tracks DAG modifications, version diffs, and configuration changes across Airflow pipelines; delivers real-time notifications to engineering teams; published as dagsonar on PyPI}
 
 \cventry{2023}{PND Service BD --- B2B/B2C E-commerce Platform}{Laravel, MySQL, PHP, Docker}{}{}{Full-stack e-commerce platform serving 6,000+ active users; payment gateway integration, inventory management, and order tracking; deployed on DigitalOcean with Docker}
 
@@ -119,13 +119,13 @@
 
 % ── Education ────────────────────────────────────────────────────────────────
 \section{Education}
-\cventry{Dec 2020}{BSc Computer Science \& Engineering}{University of Asia Pacific}{CGPA: 3.77/4.00}{}{Undergraduate research: \textbf{Transfer Learning} (model adaptation and fine-tuning)}
+\cventry{Dec 2020}{BSc Computer Science \& Engineering}{University of Asia Pacific}{CGPA: 3.77/4.00}{}{Undergraduate research: Transfer Learning (model adaptation and fine-tuning)}
 
 % ── Open Source & Research ───────────────────────────────────────────────────
 \section{Open Source \& Research}
-\cvitem{HuggingFace}{\httplink[pesnik/pesnik]{huggingface.co/pesnik/pesnik} (1B fine-tuned model, 40 downloads) $\cdot$ \httplink[pesnik/pesnik-lora]{huggingface.co/pesnik/pesnik-lora} (QLoRA adapter, 26 downloads) $\cdot$ live \textbf{GPU-based WebGPU inference} at pesnik.dev}
-\cvitem{PyPI}{4 published packages (\httplink[pypi.org/user/pesnik]{pypi.org/user/pesnik}): \textbf{superset-hetuengine-connector} (Superset $\rightarrow$ Huawei HetuEngine, first-of-kind) $\cdot$ \textbf{dagsonar} (Airflow task change visibility) $\cdot$ \textbf{dagnostics} (LLM ETL monitoring) $\cdot$ \textbf{tpt-builder} (Teradata PT script builder)}
-\cvitem{GitHub}{200+ public repos (\httplink[github.com/pesnik]{github.com/pesnik}); open PRs to \textbf{Daytona} (AI dev sandbox) and \textbf{Excalidraw}; DAGnostics (LLM ETL monitoring)}
+\cvitem{HuggingFace}{\httplink[pesnik/pesnik]{huggingface.co/pesnik/pesnik} (1B fine-tuned model, 40 downloads) $\cdot$ \httplink[pesnik/pesnik-lora]{huggingface.co/pesnik/pesnik-lora} (QLoRA adapter, 26 downloads) $\cdot$ live GPU-based WebGPU inference at pesnik.dev}
+\cvitem{PyPI}{4 published packages (\httplink[pypi.org/user/pesnik]{pypi.org/user/pesnik}): superset-hetuengine-connector (Superset $\rightarrow$ Huawei HetuEngine, first-of-kind) $\cdot$ dagsonar (Airflow task change visibility) $\cdot$ dagnostics (LLM ETL monitoring) $\cdot$ tpt-builder (Teradata PT script builder)}
+\cvitem{GitHub}{200+ public repos (\httplink[github.com/pesnik]{github.com/pesnik}); open PRs to Daytona (AI dev sandbox) and Excalidraw; DAGnostics (LLM ETL monitoring)}
 \cvitem{Research}{ORCID: \httplink[0009-0006-4082-5527]{orcid.org/0009-0006-4082-5527} $\cdot$ Kaggle: \httplink[pesnik]{kaggle.com/pesnik}}
 
 % ── Awards ───────────────────────────────────────────────────────────────────
