@@ -1,1 +1,5 @@
 .wrangler
+cv/*.aux
+cv/*.log
+cv/*.out
+cv/*.toc
