@@ -240,7 +240,9 @@ footer { padding: 3rem; border-top: 1px solid var(--border); display: flex; just
     <li><a href="#projects">projects</a></li>
     <li><a href="#ventures">ventures</a></li>
     <li><a href="#about">about</a></li>
+    <li><a href="https://linkedin.com/in/pesnik" target="_blank">linkedin ↗</a></li>
     <li><a href="https://github.com/pesnik" target="_blank">github ↗</a></li>
+    <li><a href="mailto:hello@pesnik.dev">contact</a></li>
   </ul>
 </nav>
 
@@ -255,6 +257,7 @@ footer { padding: 3rem; border-top: 1px solid var(--border); display: flex; just
     <div class="hero-actions">
       <a href="https://github.com/pesnik" target="_blank" class="btn btn-primary">View GitHub ↗</a>
       <a href="#projects" class="btn btn-ghost">See Projects</a>
+      <a href="mailto:hello@pesnik.dev" class="btn btn-ghost">hello@pesnik.dev</a>
     </div>
   </div>
 
@@ -273,12 +276,15 @@ footer { padding: 3rem; border-top: 1px solid var(--border); display: flex; just
         <div><span class="t-prompt">~</span> <span class="t-cmd">cat whoami.json</span></div>
         <div class="t-comment">{</div>
         <div>&nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-str">"pesnik"</span>,</div>
-        <div>&nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-str">"Data Engineer"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-str">"Lead Engineer, Enterprise Data & AI"</span>,</div>
         <div>&nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-str">"Bangladesh 🇧🇩"</span>,</div>
-        <div>&nbsp;&nbsp;<span class="t-key">"stack"</span>: [</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Rust"</span>, <span class="t-str">"Zig"</span>, <span class="t-str">"Go"</span>, <span class="t-str">"Python"</span></div>
-        <div>&nbsp;&nbsp;],</div>
-        <div>&nbsp;&nbsp;<span class="t-key">"building"</span>: <span class="t-str">"Calf LLM"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"email"</span>: <span class="t-str">"hello@pesnik.dev"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"stack"</span>: [<span class="t-str">"Rust"</span>, <span class="t-str">"Python"</span>, <span class="t-str">"TypeScript"</span>, <span class="t-str">"Zig"</span>, <span class="t-str">"Go"</span>],</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"building"</span>: [<span class="t-str">"IT Toolkit"</span>, <span class="t-str">"superset-hetuengine-connector"</span>, <span class="t-str">"Calf LLM"</span>],</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"pypi"</span>: <span class="t-str">"pypi.org/user/pesnik"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"huggingface"</span>: <span class="t-str">"huggingface.co/pesnik"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"kaggle"</span>: <span class="t-str">"kaggle.com/pesnik"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="t-key">"orcid"</span>: <span class="t-str">"0009-0006-4082-5527"</span>,</div>
         <div>&nbsp;&nbsp;<span class="t-key">"spirit_animal"</span>: <span class="t-str">"🦫 The Beaver"</span></div>
         <div class="t-comment">}</div>
       </div>
@@ -460,7 +466,11 @@ footer { padding: 3rem; border-top: 1px solid var(--border); display: flex; just
       </p>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;">
         <a href="https://github.com/pesnik" target="_blank" class="btn btn-ghost">GitHub ↗</a>
+        <a href="https://linkedin.com/in/pesnik" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
         <a href="https://huggingface.co/pesnik" target="_blank" class="btn btn-ghost">HuggingFace ↗</a>
+        <a href="https://kaggle.com/pesnik" target="_blank" class="btn btn-ghost">Kaggle ↗</a>
+        <a href="https://pypi.org/user/pesnik" target="_blank" class="btn btn-ghost">PyPI ↗</a>
+        <a href="https://orcid.org/0009-0006-4082-5527" target="_blank" class="btn btn-ghost">ORCID ↗</a>
       </div>
     </div>
   </div>
@@ -471,7 +481,12 @@ footer { padding: 3rem; border-top: 1px solid var(--border); display: flex; just
   <div class="footer-name">pesnik.dev</div>
   <ul class="footer-links">
     <li><a href="https://github.com/pesnik" target="_blank">GitHub</a></li>
+    <li><a href="https://linkedin.com/in/pesnik" target="_blank">LinkedIn</a></li>
     <li><a href="https://huggingface.co/pesnik" target="_blank">HuggingFace</a></li>
+    <li><a href="https://kaggle.com/pesnik" target="_blank">Kaggle</a></li>
+    <li><a href="https://pypi.org/user/pesnik" target="_blank">PyPI</a></li>
+    <li><a href="https://orcid.org/0009-0006-4082-5527" target="_blank">ORCID</a></li>
+    <li><a href="mailto:hello@pesnik.dev">hello@pesnik.dev</a></li>
   </ul>
   <div class="footer-copy">Bangladesh 🇧🇩 · Built with intention</div>
 </footer>
@@ -483,12 +498,21 @@ footer { padding: 3rem; border-top: 1px solid var(--border); display: flex; just
 
   const SYSTEM = `You are pesnik's terminal agent — embedded live in pesnik.dev.
 
-pesnik is a Data Engineer & entrepreneur in Bangladesh. Stack: Rust, Zig, Go, Python. Building Calf LLM (AI for institutional memory). Spirit animal: 🦫 The Beaver.
+pesnik is Md. Rakibul Hasan — Lead Engineer, Enterprise Data Engineering & AI at Banglalink Digital, Bangladesh. 5+ years across data engineering, AI/ML, and enterprise agent architecture.
 
-Projects: Zygote (Zig JDBC-ODBC bridge), Spotlight Search (Rust/Windows), Superset Playground, AoC in Zig, MorseChat (Android/Kotlin), Gin Repertoire (Go/Gin/GORM).
-Ventures: Calf (LLM), গুদাম/Gudam (lightweight data warehouse in Rust), PlugNest (Go plugins), একের ভিতর সব (STEM EdTech).
+Contact: hello@pesnik.dev | Site: pesnik.dev | LinkedIn: linkedin.com/in/pesnik | GitHub: github.com/pesnik | PyPI: pypi.org/user/pesnik | HuggingFace: huggingface.co/pesnik | Kaggle: kaggle.com/pesnik | ORCID: 0009-0006-4082-5527
 
-Respond in terminal style: concise, precise, occasionally witty. No markdown headers or bullet walls. Short paragraphs. Go deep on Rust, Zig, data engineering, LLMs when asked. Help visitors explore the portfolio.`;
+Stack: Python, Java, TypeScript, Rust, Golang, Zig, SQL. Deep in: Tauri 2/Rust, Next.js 15, MCP, LLMs, Apache Airflow, Spark, Kubernetes.
+
+Current work at Banglalink: Billion-row IPDR ETL architecture, near-real-time pipeline, Teradata→Huawei DWS Migration Hub (AI-assisted SQL translation), Apache Superset managed service on Kubernetes (100+ users, solo DevOps), superset-hetuengine-connector (first-of-kind open-source Superset→Huawei HetuEngine connector, on PyPI), IT Toolkit enterprise AI agent desktop app (Tauri 2 + Rust + Next.js + MCP + browser/computer-use automation), Agent Sandbox (live browser + CLI for AI agents), autonomous DataOps/Day-2 Ops monitoring, n8n self-hosted automation.
+
+Open source: Zygote (Zig JDBC-ODBC bridge), Spotlight Search (Rust/Windows), superset-hetuengine-connector (Python/PyPI), Superset Playground, AoC in Zig, MorseChat (Android/Kotlin), Gin Repertoire (Go/Gin).
+
+Ventures: Calf (LLM for institutional memory), গুদাম/Gudam (lightweight data warehouse in Rust), PlugNest (Go plugins), একের ভিতর সব (STEM EdTech).
+
+Spirit animal: 🦫 The Beaver — industrious, creative, ecosystem shaper. একের ভিতর সব — everything within one.
+
+Respond in terminal style: concise, precise, occasionally witty. No markdown headers or bullet walls. Short paragraphs or single lines. Go deep on Rust, Zig, data engineering, LLMs, agent architecture when asked. Help visitors explore the portfolio.`;
 
   const WEBGPU = {
     modelUrl: "https://huggingface.co/pesnik/pesnik-webgpu/resolve/main/",
@@ -497,13 +521,15 @@ Respond in terminal style: concise, precise, occasionally witty. No markdown hea
   };
 
   const CMDS = {
-    whoami:            () => `<div style="color:var(--accent);">pesnik</div><div style="color:var(--muted);">Data Engineer · Bangladesh · Always shipping</div>`,
-    'ls projects':     () => ['zygote','spotlight-search','superset-playground','advent-of-code-zig','morse-chat','gin-repertoire'].map(p => `<div style="color:#7eb8a8;">${p}/</div>`).join(''),
-    'ls ventures':     () => ['calf','gudam','plugnest','eker-bhitor-sob'].map(p => `<div style="color:#7eb8a8;">${p}/</div>`).join(''),
-    ls:                () => `<div style="color:var(--muted);">projects/&nbsp;&nbsp;ventures/&nbsp;&nbsp;whoami.json&nbsp;&nbsp;spirit_animal.txt</div>`,
+    whoami:            () => `<div style="color:var(--accent);">pesnik</div><div style="color:var(--muted);">Lead Engineer, Enterprise Data & AI · Banglalink Digital · Bangladesh</div><div style="color:var(--muted);margin-top:4px;"><a href="mailto:hello@pesnik.dev" style="color:#7eb8a8;">hello@pesnik.dev</a> · pesnik.dev</div>`,
+    'ls projects':     () => ['zygote','spotlight-search','superset-hetuengine-connector','superset-playground','advent-of-code-zig','morse-chat','gin-repertoire'].map(p => `<div style="color:#7eb8a8;">${p}/</div>`).join(''),
+    'ls ventures':     () => ['calf','gudam','plugnest','eker-bhitor-sob','it-toolkit'].map(p => `<div style="color:#7eb8a8;">${p}/</div>`).join(''),
+    ls:                () => `<div style="color:var(--muted);">projects/&nbsp;&nbsp;ventures/&nbsp;&nbsp;whoami.json&nbsp;&nbsp;spirit_animal.txt&nbsp;&nbsp;contact.txt</div>`,
     pwd:               () => `<div>/home/pesnik</div>`,
-    help:              () => `<div style="color:var(--accent);">built-in commands:</div><div style="color:var(--muted);">whoami · ls · ls projects · ls ventures · pwd · clear · help · cat spirit_animal.txt</div><div style="margin-top:6px;color:var(--muted);">or type anything in plain English — the AI is live ↵</div>`,
-    'cat whoami.json': () => `<div class="t-comment">{</div><div>&nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-str">"pesnik"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-str">"Data Engineer"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-str">"Bangladesh 🇧🇩"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"stack"</span>: [<span class="t-str">"Rust"</span>, <span class="t-str">"Zig"</span>, <span class="t-str">"Go"</span>, <span class="t-str">"Python"</span>],</div><div>&nbsp;&nbsp;<span class="t-key">"building"</span>: <span class="t-str">"Calf LLM"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"spirit_animal"</span>: <span class="t-str">"🦫 The Beaver"</span></div><div class="t-comment">}</div>`,
+    contact:           () => `<div><a href="mailto:hello@pesnik.dev" style="color:#7eb8a8;">hello@pesnik.dev</a></div><div style="color:var(--muted);margin-top:4px;"><a href="https://linkedin.com/in/pesnik" target="_blank" style="color:#7eb8a8;">linkedin.com/in/pesnik</a></div>`,
+    'cat contact.txt': () => `<div><span class="t-key">email</span>    <a href="mailto:hello@pesnik.dev" style="color:#a8c47e;">hello@pesnik.dev</a></div><div><span class="t-key">linkedin</span> <a href="https://linkedin.com/in/pesnik" target="_blank" style="color:#a8c47e;">linkedin.com/in/pesnik</a></div><div><span class="t-key">github</span>   <a href="https://github.com/pesnik" target="_blank" style="color:#a8c47e;">github.com/pesnik</a></div><div><span class="t-key">pypi</span>     <a href="https://pypi.org/user/pesnik" target="_blank" style="color:#a8c47e;">pypi.org/user/pesnik</a></div><div><span class="t-key">hf</span>       <a href="https://huggingface.co/pesnik" target="_blank" style="color:#a8c47e;">huggingface.co/pesnik</a></div><div><span class="t-key">kaggle</span>   <a href="https://kaggle.com/pesnik" target="_blank" style="color:#a8c47e;">kaggle.com/pesnik</a></div><div><span class="t-key">orcid</span>    <a href="https://orcid.org/0009-0006-4082-5527" target="_blank" style="color:#a8c47e;">0009-0006-4082-5527</a></div>`,
+    help:              () => `<div style="color:var(--accent);">built-in commands:</div><div style="color:var(--muted);">whoami · ls · ls projects · ls ventures · pwd · clear · help</div><div style="color:var(--muted);">cat whoami.json · cat spirit_animal.txt · cat contact.txt · contact</div><div style="margin-top:6px;color:var(--muted);">or type anything in plain English — the AI is live ↵</div>`,
+    'cat whoami.json': () => `<div class="t-comment">{</div><div>&nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-str">"pesnik"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-str">"Lead Engineer, Enterprise Data & AI"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-str">"Bangladesh 🇧🇩"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"email"</span>: <span class="t-str">"hello@pesnik.dev"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"stack"</span>: [<span class="t-str">"Rust"</span>, <span class="t-str">"Python"</span>, <span class="t-str">"TypeScript"</span>, <span class="t-str">"Zig"</span>, <span class="t-str">"Go"</span>],</div><div>&nbsp;&nbsp;<span class="t-key">"building"</span>: [<span class="t-str">"IT Toolkit"</span>, <span class="t-str">"superset-hetuengine-connector"</span>, <span class="t-str">"Calf LLM"</span>],</div><div>&nbsp;&nbsp;<span class="t-key">"pypi"</span>: <span class="t-str">"pypi.org/user/pesnik"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"huggingface"</span>: <span class="t-str">"huggingface.co/pesnik"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"kaggle"</span>: <span class="t-str">"kaggle.com/pesnik"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"orcid"</span>: <span class="t-str">"0009-0006-4082-5527"</span>,</div><div>&nbsp;&nbsp;<span class="t-key">"spirit_animal"</span>: <span class="t-str">"🦫 The Beaver"</span></div><div class="t-comment">}</div>`,
     'cat spirit_animal.txt': () => `<div>🦫 The Beaver</div><div style="color:var(--muted);">industrious · creative · ecosystem shaper · nature's architect</div><div style="color:var(--muted);font-style:italic;">একের ভিতর সব — everything within one</div>`,
   };
 
